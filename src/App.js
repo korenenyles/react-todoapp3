@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./index.css";
 import todosList from "./todos.json";
+import {Route, NavLink} from 'react-router-dom';
+import TodoList from "./TodoList";
+
 
 class App extends Component {
   state = {
@@ -24,7 +27,7 @@ class App extends Component {
         title: this.state.value,
         completed: false
       });
-this.setState({ todos: newTodoList, value: ""});
+      this.setState({ todos: newTodoList, value: ""});
     }
   };
 
@@ -44,7 +47,7 @@ this.setState({ todos: newTodoList, value: ""});
    this.setState({ todos: newTodoList });
   };
 
-  handleComplete = (event) => {
+  handleCompleted = (event) => {
     const completed = this.state.todos.filter(todo => todo.completed === false);
     this.setState({ todos: completed}) 
   }
@@ -70,62 +73,67 @@ this.setState({ todos: newTodoList, value: ""});
             value={this.state.value}
           />
         </header>
+        
+        <Route 
+        exact
+        path="/"
+        render={ () => (
         <TodoList 
         handleToggle ={this.handleToggle}
         handleDelete={this.handleDelete} 
-        handleComplete={this.handleComplete}
-        todos={this.state.todos} />
-        <footer className="footer">
-          <span className="todo-count">
-            <strong>0</strong> item(s) left
-          </span>
-          <button className="clear-completed" onClick={this.handleComplete}>Clear completed</button>
-        </footer>
+        todos={this.state.todos} 
+        />
+        )}
+        />
+
+        <Route 
+        path="/active"
+        render={ () => (
+        <TodoList 
+        handleToggle ={this.handleToggle}
+        handleDelete={this.handleDelete} 
+        todos={this.state.todos.filter(todo => todo.completed === false)} 
+        />
+        )}
+        />
+
+        <Route
+        path="/completed"
+        render={ () => (
+        <TodoList 
+        handleToggle ={this.handleToggle}
+        handleDelete={this.handleDelete} 
+        todos={this.state.todos.filter(todo => todo.completed === true)} 
+        />
+        )}
+        />
+
+      <footer className="footer">
+      <span className="todo-count">
+        <strong>0</strong> item(s) left
+      </span>
+      <ul className="filters">
+        <li>
+          <NavLink exact to="/" activeClassName="Selected">All</NavLink>
+        </li>
+        <li>
+          <NavLink to="/active" activeClassName="Selected">Active</NavLink>
+        </li>
+        <li>
+          <NavLink to="/completed" activeClassName="Selected">Completed</NavLink>
+        </li>
+      </ul>
+      <button className="clear-completed" onClick={this.handleCompleted}>Clear completed</button>
+    </footer>
+
+          
       </section>
     );
   }
 }
 
-class TodoItem extends Component {
-  
-  render() {
-    return (
-      <li className={this.props.completed ? "completed" : ""}>
-        <div className="view">
-          <input
-            className="toggle"
-            type="checkbox"
-            checked={this.props.completed}
-            onChange={this.props.handleToggle}
-           
-          />
-          
-          <label>{this.props.title}</label>
-          
-          <button className="destroy" onClick={this.props.handleDelete}/>
-        </div>
-      </li>
-    );
-  }
-}
 
-class TodoList extends Component {
-  render() {
-    return (
-      <section className="main">
-        <ul className="todo-list">
-          {this.props.todos.map(todo => (
-            <TodoItem 
-            key={todo.id}
-            handleToggle = {event => this.props.handleToggle(todo.id)}
-            handleDelete={event => this.props.handleDelete(event, todo.id)} 
-            title={todo.title} 
-            completed={todo.completed} />
-          ))}
-        </ul>
-      </section>
-    );
-  }
-}
+
+
 
 export default App;
