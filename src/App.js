@@ -9,7 +9,8 @@ class App extends Component {
   state = {
     todos: todosList,
     value: '',
-    completed: false
+    completed: false,
+    count: 0
   };
   
   handleDelete = (event, todoIdToDelete) => {
@@ -55,6 +56,13 @@ class App extends Component {
   handleChange = event => {
     this.setState({ value: event.target.value})
   };
+
+  handleCount = () => {
+    let numberOfToDos = this.state.todos.filter( todo => todo.completed === false)
+    return numberOfToDos.length
+}
+    
+  
 
   
   
@@ -109,8 +117,9 @@ class App extends Component {
         />
 
       <footer className="footer">
-      <span className="todo-count">
-        <strong>0</strong> item(s) left
+      <span className="todo-count" >
+        <this.handleCount>
+        <strong>0</strong> item(s) left</this.handleCount>
       </span>
       <ul className="filters">
         <li>
