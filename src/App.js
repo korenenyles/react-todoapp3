@@ -123,16 +123,16 @@ class App extends Component {
       </span>
       <ul className="filters">
         <li>
-          <NavLink exact to="/" activeClassName="Selected">All</NavLink>
+          <NavLink exact to="/" activeClassName="selected">All</NavLink>
         </li>
         <li>
-          <NavLink to="/active" activeClassName="Selected">Active</NavLink>
+          <NavLink to="/active" activeClassName="selected">Active</NavLink>
         </li>
         <li>
-          <NavLink to="/completed" activeClassName="Selected">Completed</NavLink>
+          <NavLink to="/completed" activeClassName="selected">Completed</NavLink>
         </li>
       </ul>
-      <button className="clear-completed" onClick={this.handleCompleted}>Clear completed</button>
+      <button className="clear-completed" activeClassName="selected" onClick={this.handleCompleted}>Clear completed</button>
     </footer>
 
           
