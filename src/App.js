@@ -118,8 +118,8 @@ class App extends Component {
 
       <footer className="footer">
       <span className="todo-count" >
-        <this.handleCount>
-        <strong>0</strong> item(s) left</this.handleCount>
+        <strong><this.handleCount/></strong>{" "}
+         item(s) left
       </span>
       <ul className="filters">
         <li>
