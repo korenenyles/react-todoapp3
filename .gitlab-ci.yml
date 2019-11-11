@@ -11,6 +11,5 @@ pages:
       - public
   only:
     - master
-
-    variables:
+variables:
       PUBLIC_URL: "/todo-app-part2"
