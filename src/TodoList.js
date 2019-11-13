@@ -11,7 +11,6 @@ class TodoList extends Component {
           {this.props.todos.map(todo => (
             <TodoItem
               key={todo.id}
-              //handleToggle={event => this.props.toggleTodo(todo.id)}
               handleDelete={event => this.props.deleteTodo(todo.id)}
               id={todo.id}
               title={todo.title}

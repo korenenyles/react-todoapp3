@@ -32,3 +32,10 @@ export const deleteTodo = (todoIdToDelete) => {
             payload: todoIdToDelete
       };
 }
+
+export const clearCompletedTodos = (completed) => {
+      return {
+            type: CLEAR_COMPLETED_TODOS,
+            payload: completed
+      };
+}

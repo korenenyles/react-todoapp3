@@ -4,7 +4,7 @@ import todosList from "./todos.json";
 import { Route, NavLink } from "react-router-dom";
 import TodoList from './TodoList';
 import { connect } from "react-redux";
-import {addTodo , deleteTodo} from "./actions";
+import {addTodo , deleteTodo, clearCompletedTodos} from "./actions";
 
 class App extends Component {
  state = {
@@ -12,24 +12,22 @@ class App extends Component {
    value: "",
    // completed: false
  }
- handleDelete = (event, newTodoList) => {
-    this.setState({ todos: newTodoList });
- };
+
  handleCreate = event => {
     if(event.key === "Enter"){
     this.props.addTodo(this.state.value);
     this.setState({value: ""});
   }
  };
- handleComplete = (event) => {
-   const completed = this.state.todos.filter(todo => todo.completed === false);
-   this.setState({ todos: completed})
- };
+//  handleComplete = (event) => {
+//    const completed = this.state.todos.filter(todo => todo.completed === false);
+//    this.setState({ todos: completed})
+//  };
  handleCount =() => {
-    let numberOfTDos = this.state.todos.filter(
+    let numberOfTodos = this.state.todos.filter(
      todo => todo.completed === false
      );
-      return numberOfTDos.length;
+      return numberOfTodos.length;
  }
 
   handleChange = event => {
@@ -57,7 +55,7 @@ class App extends Component {
         <TodoList
           handleToggle={this.handleToggle}
           handleDelete={this.handleDelete}
-          todos={this.state.todos}
+          todos={this.props.todos}
         />
       )}
     />
@@ -73,7 +71,8 @@ class App extends Component {
     />
     <Route
       path="/completed"
-      render={() => (
+      render={() => 
+        (
         <TodoList
           handleToggle={this.handleToggle}
           handleDelete={this.handleDelete}
@@ -81,11 +80,11 @@ class App extends Component {
         />
       )}
     />
-       <TodoList
+       {/* <TodoList
        handleToggle ={this.handleToggle}
        handleDelete={this.handleDelete}
        handleComplete={this.handleComplete}
-       todos={this.props.todos} />
+       todos={this.props.todos} /> */}
        <footer className="footer">
          <span className="todo-count">
            <strong>
@@ -110,7 +109,7 @@ class App extends Component {
           </NavLink>
         </li>
       </ul>
-         <button className="clear-completed" >Clear completed</button>
+         <button className="clear-completed" onClick={event => this.props.clearCompletedTodos(this.props.id)} >Clear completed</button>
        </footer>
      </section>
    );
@@ -124,7 +123,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     addTodo,
-    deleteTodo
+    deleteTodo,
+    clearCompletedTodos
 
 };
 export default connect (
