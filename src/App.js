@@ -6,6 +6,7 @@ import TodoList from './TodoList';
 import { connect } from "react-redux";
 import {addTodo , deleteTodo, clearCompletedTodos} from "./actions";
 
+
 class App extends Component {
  state = {
    todos: todosList,
@@ -24,7 +25,7 @@ class App extends Component {
 //    this.setState({ todos: completed})
 //  };
  handleCount =() => {
-    let numberOfTodos = this.state.todos.filter(
+    let numberOfTodos = this.props.todos.filter(
      todo => todo.completed === false
      );
       return numberOfTodos.length;
@@ -88,7 +89,7 @@ class App extends Component {
        <footer className="footer">
          <span className="todo-count">
            <strong>
-           <this.handleCount />
+           <this.handleCount/>
            </strong>{" "}
             item(s) left
          </span>
@@ -124,7 +125,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     addTodo,
     deleteTodo,
-    clearCompletedTodos
+    clearCompletedTodos,
+   
 
 };
 export default connect (

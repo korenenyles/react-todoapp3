@@ -4,6 +4,7 @@ import {
   ADD_TODO,
   DELETE_TODO,
   CLEAR_COMPLETED_TODOS
+
 } from "./actions.js";
 
 const initialState = {
@@ -41,6 +42,8 @@ const reducer = (state = initialState, action) => {
       const completed = state.todos.filter(todo => todo.completed === false);
       return { ...state, todos: completed };
     }
+
+    
   }
 };
 
