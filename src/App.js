@@ -3,29 +3,23 @@ import "./index.css";
 import todosList from "./todos.json";
 import { Route, NavLink } from "react-router-dom";
 import TodoList from './TodoList';
-import { connect } from "react-redux"
+import { connect } from "react-redux";
+import {addTodo , deleteTodo} from "./actions";
+
 class App extends Component {
  state = {
    todos: todosList,
    value: "",
    // completed: false
  }
- handleDelete = (event, todoIdToDelete) => {
-   const newTodoList = this.props.todos.filter(
-    todo => todo.id !== todoIdToDelete  );
-   this.setState({ todos: newTodoList });
+ handleDelete = (event, newTodoList) => {
+    this.setState({ todos: newTodoList });
  };
  handleCreate = event => {
-   if(event.key === "Enter"){
-     const newTodoList = this.state.todos.slice();
-     newTodoList.push({
-       userId: 1,
-       id: Math.floor(Math.random() * 1000000000),
-       title: this.state.value,
-       completed: false
-     });
-this.setState({ todos: newTodoList, value: ""});
-   }
+    if(event.key === "Enter"){
+    this.props.addTodo(this.state.value);
+    this.setState({value: ""});
+  }
  };
  handleComplete = (event) => {
    const completed = this.state.todos.filter(todo => todo.completed === false);
@@ -37,9 +31,11 @@ this.setState({ todos: newTodoList, value: ""});
      );
       return numberOfTDos.length;
  }
+
   handleChange = event => {
    this.setState({ value: event.target.value})
   };
+
  render() {
    return (
      <section className="todoapp">
@@ -125,10 +121,13 @@ const mapStateToProps = (state) => {
    todos: state.todos
  };
 };
-// const mapDispatchToProps = {
-// addTodo
-// };
+
+const mapDispatchToProps = {
+    addTodo,
+    deleteTodo
+
+};
 export default connect (
  mapStateToProps,
- null
+ mapDispatchToProps
  )(App);

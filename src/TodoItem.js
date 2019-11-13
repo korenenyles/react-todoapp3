@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { toggleTodo } from "./actions";
+import { toggleTodo, deleteTodo } from "./actions";
 
 class TodoItem extends Component {
   // this.props.handleDelete
@@ -16,7 +16,7 @@ class TodoItem extends Component {
             onChange={event => this.props.toggleTodo(this.props.id)}
           />
           <label>{this.props.title}</label>
-          <button className="destroy" onClick={this.props.handleDelete} />
+          <button className="destroy" onClick={event => this.props.deleteTodo(this.props.id)} />
         </div>
       </li>
     );
@@ -24,6 +24,6 @@ class TodoItem extends Component {
 }
 
 const mapDispatchToProps = {
-  toggleTodo
+  toggleTodo, deleteTodo
 };
 export default connect(null, mapDispatchToProps)(TodoItem);
